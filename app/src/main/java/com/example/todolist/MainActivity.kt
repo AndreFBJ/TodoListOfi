@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.PrintStream
@@ -14,6 +15,7 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
 
     val FILE_NAME = "grades.txt"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         val grades = leerLista()
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, grades)
         listaTareas.adapter = adapter
+        listaTareas!!.onItemLongClickListener = AdapterView.OnItemLongClickListener{parent, view, position, id ->
+            grades!!.removeAt(position)
+            adapter!!.notifyDataSetChanged()
+            true
+        }
     }
 
     fun guardarNota(view: View) {
@@ -56,7 +63,5 @@ class MainActivity : AppCompatActivity() {
         return listaTareas
     }
 
-    //fun OnClickAddHomeWork(view: View){
 
-    //}
 }
